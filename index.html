@@ -1,0 +1,230 @@
+
+       <!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Эстетичный Коктейльный Бар ✨</title>
+    <style>
+        :root {
+            --soft-peach: #ffeadb;
+            --soft-blue: #dcf0ff;
+            --glass-card: rgba(255, 255, 255, 0.4);
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--soft-blue) 0%, var(--soft-peach) 100%);
+            color: #5a5a5a;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .screen {
+            width: 100%; max-width: 950px;
+            display: flex; flex-direction: column;
+            align-items: center; padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .bar-card {
+            background: var(--glass-card);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 40px; border: 3px solid white;
+            width: 100%; padding: 40px; box-sizing: border-box;
+            box-shadow: 0 20px 50px rgba(255, 183, 161, 0.1);
+            text-align: center;
+        }
+
+        h1 { color: #ff8a65; font-size: 2.3rem; margin-top: 0; text-shadow: 1px 1px 0 white; }
+
+        /* Конструкторский интерфейс */
+        .workspace {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 40px; margin-top: 30px; align-items: center;
+        }
+
+        /* Эстетичный стакан */
+        .glass-container {
+            width: 200px; height: 320px;
+            border: 5px solid white;
+            border-top: none;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            margin: 0 auto; position: relative;
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.03);
+            display: flex; flex-direction: column-reverse;
+            overflow: hidden;
+        }
+
+        /* Слои жидкости */
+        .liquid-layer {
+            width: 100%; height: 0%;
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Топпинги и добавки */
+        .topping-item {
+            position: absolute; font-size: 2rem;
+            user-select: none; pointer-events: none;
+            animation: floatItem 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes floatItem {
+            from { transform: translateY(0) rotate(0deg); }
+            to { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        /* Кнопки управления */
+        .controls-panel {
+            text-align: left; background: rgba(255,255,255,0.3);
+            padding: 25px; border-radius: 30px; border: 1px solid white;
+        }
+
+        .panel-section-title {
+            font-weight: bold; font-size: 0.9rem; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 10px; color: #ff8a65;
+        }
+
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+
+        .btn-ingredient {
+            background: white; border: 1px solid #ffccaa; padding: 12px;
+            border-radius: 15px; cursor: pointer; transition: 0.3s;
+            font-size: 0.9rem; font-weight: 500; color: #666;
+        }
+
+        .btn-ingredient:hover { background: #fff5ee; transform: translateY(-2px); }
+        .btn-ingredient:active { transform: scale(0.95); }
+
+        .btn-mix {
+            width: 100%; background: #ffccaa; color: #5a5a5a;
+            border: 2px solid white; padding: 15px; border-radius: 20px;
+            font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: 0.3s;
+        }
+        .btn-mix:hover { background: #ffbd9b; transform: translateY(-2px); }
+
+        /* Выплывающий блок вердикта */
+        .result-zone {
+            display: none; margin-top: 30px; padding: 30px;
+            background: white; border-radius: 35px; border: 1px solid #dcf0ff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="screen">
+        <div class="bar-card">
+            <h1>🔮 Магический Экспрессо-Бар</h1>
+            <p style="margin-bottom: 20px;">Создай свой авторский напиток. Наливай слои, добавляй текстуры и сотвори эстетику.</p>
+            
+            <div class="workspace">
+                <!-- Лево: Визуальный стакан -->
+                <div style="position: relative; width: 100%;">
+                    <div class="glass-container" id="glass">
+                        <div id="layer3" class="liquid-layer"></div>
+                        <div id="layer2" class="liquid-layer"></div>
+                        <div id="layer1" class="liquid-layer"></div>
+                    </div>
+                </div>
+
+                <!-- Право: Кнопки ингредиентов -->
+                <div class="controls-panel">
+                    <div class="panel-section-title">1. Выбери основу (До 3 слоев)</div>
+                    <div class="btn-grid">
+                        <button class="btn-ingredient" onclick="addLayer('#ffb7a1')">🍑 Персиковый нектар</button>
+                        <button class="btn-ingredient" onclick="addLayer('#c2e9fb')">🌌 Голубая сироп-лагуна</button>
+                        <button class="btn-indigo" class="btn-ingredient" style="background:white; border:1px solid #ffccaa; padding:12px; border-radius:15px; cursor:pointer;" onclick="addLayer('#e0c3fc')">🔮 Лавандовый тоник</button>
+                        <button class="btn-ingredient" onclick="addLayer('#ff9a9e')">🍓 Клубничный мусс</button>
+                    </div>
+
+                    <div class="panel-section-title">2. Добавь текстуру (Макс. 3)</div>
+                    <div class="btn-grid">
+                        <button class="btn-ingredient" onclick="addTopping('🧊', 40, 80)">🧊 Нано-лёд</button>
+                        <button class="btn-ingredient" onclick="addTopping('✨', 20, 40)">✨ Космические блестки</button>
+                        <button class="btn-ingredient" onclick="addTopping('🌸', 60, 20)">🌸 Лепестки роз</button>
+                        <button class="btn-ingredient" onclick="addTopping('🍡', 50, 50)">🍡 Маршмеллоу</button>
+                    </div>
+
+                    <button class="btn-mix" onclick="mixDrink()">СМЕШАТЬ И УЗНАТЬ ВАЙБ 🔮</button>
+                </div>
+            </div>
+
+            <!-- Результат -->
+            <div class="result-zone" id="result-box">
+                <h2 id="drink-name" style="color: #ff8a65; margin-top:0;"></h2>
+                <p id="drink-vibe" style="font-style: italic; color: #666; font-size: 1.1rem;"></p>
+                <p id="drink-recipe-status" style="font-weight: bold; color: #a0c4ff; margin-bottom: 0;"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLayers = 0;
+        let selectedColors = [];
+        let toppingsCount = 0;
+        let hasToppings = [];
+
+        function addLayer(color) {
+            if (currentLayers >= 3) return;
+            currentLayers++;
+            selectedColors.push(color);
+
+            const layer = document.getElementById(`layer${currentLayers}`);
+            layer.style.backgroundColor = color;
+            layer.style.height = "33.3%";
+        }
+
+        function addTopping(emoji, top, left) {
+            if (toppingsCount >= 3) return;
+            toppingsCount++;
+            hasToppings.push(emoji);
+
+            const glass = document.getElementById('glass');
+            const item = document.createElement('div');
+            item.className = 'topping-item';
+            item.innerText = emoji;
+            // Раскидываем внутри стакана
+            item.style.top = (top + Math.random() * 20) + '%';
+            item.style.left = (left + Math.random() * 20) + '%';
+            
+            glass.appendChild(item);
+        }
+
+        function mixDrink() {
+            if (currentLayers === 0) return;
+
+            const resultBox = document.getElementById('result-box');
+            resultBox.style.display = 'block';
+
+            let name = "Экзотический микс";
+            let vibe = "Этот напиток полон загадок, как и твоё сегодняшнее настроение.";
+            let status = "✨ Обычный рецепт открыт";
+
+            // Проверка на СЕКРЕТНЫЙ РЕЦЕПТ (тот самый элемент долгого поиска)
+            // Рецепт 1: Персик + Голубой + Лаванда + Блестки
+            if(selectedColors.includes('#ffb7a1') && selectedColors.includes('#c2e9fb') && hasToppings.includes('✨')) {
+                name = "🌌 Космический Персик (ЛЕГЕНДАРНЫЙ)";
+                vibe = "Вайб: Абсолютное вдохновение. Ты создала идеальный баланс космического холода и фруктового тепла. Заскринь этот момент!";
+                status = "🏆 СЕКРЕТНЫЙ РЕЦЕПТ №1 НАЙДЕН!";
+            }
+            // Рецепт 2: Клубника + Молоко/Лаванда + Маршмеллоу
+            else if(selectedColors.includes('#ff9a9e') && hasToppings.includes('🍡')) {
+                name = "🍡 Клубничный Неон (РЕДКИЙ)";
+                vibe = "Вайб: Мимимишная перезагрузка. Этот нежный состав дарит ощущение уюта и сладких снов.";
+                status = "⭐ РЕДКИЙ РЕЦЕПТ №2 НАЙДЕН!";
+            }
+
+            document.getElementById('drink-name').innerText = name;
+            document.getElementById('drink-vibe').innerText = vibe;
+            document.getElementById('drink-recipe-status').innerText = status;
+            
+            resultBox.scrollIntoView({behavior: 'smooth'});
+        }
+    </script>
+</body>
+</html>
